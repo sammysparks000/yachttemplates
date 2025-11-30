@@ -1,0 +1,66 @@
+{
+  "version": "2",
+  "templates": [
+    {
+      "type": 3,
+      "title": "Onlook",
+      "description": "Onlook: An open-source AI-first design tool for visually building and editing React apps. Deploys web-client with Supabase integration.",
+      "name": "onlook",
+      "logo": "https://raw.githubusercontent.com/onlook-dev/onlook/main/public/logo.png",
+      "repository": {
+        "url": "https://github.com/onlook-dev/onlook.git",
+        "stackfile": "docker-compose.yml"
+      },
+      "env": [
+        {
+          "name": "SUPABASE_URL",
+          "label": "Supabase Project URL",
+          "description": "Your Supabase project URL (e.g., https://your-project.supabase.co)",
+          "default": ""
+        },
+        {
+          "name": "SUPABASE_ANON_KEY",
+          "label": "Supabase Anon Key",
+          "description": "Public anon key for Supabase client",
+          "default": ""
+        },
+        {
+          "name": "SUPABASE_SERVICE_ROLE_KEY",
+          "label": "Supabase Service Role Key",
+          "description": "Service role key for server-side auth",
+          "default": ""
+        },
+        {
+          "name": "NEXTAUTH_SECRET",
+          "label": "NextAuth Secret",
+          "description": "Secret for NextAuth sessions (generate with openssl rand -base64 32)",
+          "default": ""
+        },
+        {
+          "name": "ONLOOK_PORT",
+          "label": "Onlook Port",
+          "description": "Port for the web-client (default: 3000)",
+          "default": "3000"
+        }
+      ],
+      "volumes": [
+        {
+          "label": "Onlook Data Volume",
+          "description": "Persistent volume for Onlook uploads and configs (optional; map to /data)",
+          "container": "/data",
+          "bind": "/path/to/onlook/data",
+          "readonly": false
+        }
+      ],
+      "platform": "linux",
+      "categories": [
+        "design",
+        "development",
+        "selfhosted",
+        "ai"
+      ],
+      "note": "<p><strong>Setup Instructions:</strong></p><ul><li>Ensure .env files are configured in the repo clone (e.g., apps/web/client/.env).</li><li>Create external network if using: <code>docker network create supabase_network_onlook-web</code>.</li><li>Build and run: Access at http://your-host:3000 after deployment.</li><li>For full setup, see <a href='https://docs.onlook.com/self-hosting/docker-compose'>Onlook Docs</a>.</li></ul>",
+      "restart_policy": "unless-stopped"
+    }
+  ]
+}

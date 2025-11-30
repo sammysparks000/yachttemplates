@@ -3,34 +3,51 @@
     "type": 1,
     "title": "Onlook",
     "name": "onlook",
-    "description": "Open-source, AI-powered visual editor for React apps. Self-hosted version with Supabase backend.",
+    "description": "Open-source AI-powered visual editor for React apps. Self-hosted with Supabase.",
     "logo": "https://raw.githubusercontent.com/onlook-dev/onlook/main/public/logo.png",
     "image": "onlookdev/onlook:latest",
-    "note": "Onlook self-hosted. After first deploy, access at your chosen URL to create the first account.\n\n<strong>Important:</strong> You must mount your prepared repo (with the two .env files) to /app before first start.",
-    "categories": ["Development", "Design", "AI"],
+    "note": "Mount your cloned repo volume (with .env files) to /app. Access at http://YOUR_VPS_IP:3000. Add reverse proxy for HTTPS subdomain.",
+    "categories": [
+      "Development",
+      "Design",
+      "AI"
+    ],
     "platform": "linux",
     "restart_policy": "unless-stopped",
-    "network_mode": "host",
-    "ports": [],
+    "ports": [
+      "3000:3000/tcp"
+    ],
     "volumes": [
       {
         "container": "/app",
         "bind": "!onlook-data",
-        "description": "Mount the cloned Onlook repo here (must contain apps/web/client/.env and apps/web/server/.env)"
+        "description": "Path to cloned Onlook repo (include apps/web/client/.env and apps/web/server/.env)"
       }
     ],
     "env": [
       {
-        "name": "NEXTAUTH_URL",
-        "label": "NextAuth URL (external)",
-        "default": "https://onlook.sammysparks.me",
-        "description": "Exact public URL you will use (must match both .env files)"
+        "name": "PUID",
+        "label": "PUID",
+        "default": "!PUID",
+        "description": "User ID for permissions"
       },
       {
-        "name": "NEXT_PUBLIC_NEXTAUTH_URL",
-        "label": "NextAuth URL (public)",
+        "name": "PGID",
+        "label": "PGID",
+        "default": "!PGID",
+        "description": "Group ID for permissions"
+      },
+      {
+        "name": "TZ",
+        "label": "TZ",
+        "default": "!TZ",
+        "description": "Timezone e.g. America/New_York"
+      },
+      {
+        "name": "NEXTAUTH_URL",
+        "label": "NextAuth URL",
         "default": "https://onlook.sammysparks.me",
-        "description": "Same value as above – required for the client"
+        "description": "Public URL (must match .env files)"
       }
     ]
   }
